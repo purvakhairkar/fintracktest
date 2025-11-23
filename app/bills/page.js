@@ -227,10 +227,10 @@ export default function BillsPage() {
                           </div>
                           <div className="text-right">
                             <div className="space-y-1">
-                              <p className="text-xs text-muted-foreground">Subtotal: ${bill.subtotal?.toFixed(2) || '0.00'}</p>
-                              <p className="text-xs text-muted-foreground">GST ({bill.gstPercentage}%): ${bill.gstAmount?.toFixed(2) || '0.00'}</p>
+                              <p className="text-xs text-muted-foreground">Subtotal: ₹{bill.subtotal?.toFixed(2) || '0.00'}</p>
+                              <p className="text-xs text-muted-foreground">GST ({bill.gstPercentage}%): ₹{bill.gstAmount?.toFixed(2) || '0.00'}</p>
                               <p className="text-sm font-semibold">Total Amount</p>
-                              <p className="text-3xl font-bold text-indigo-600">${bill.totalAmount.toFixed(2)}</p>
+                              <p className="text-3xl font-bold text-indigo-600">₹{bill.totalAmount.toFixed(2)}</p>
                             </div>
                           </div>
                         </div>
@@ -261,11 +261,11 @@ export default function BillsPage() {
                                 </div>
                                 <div>
                                   <p className="font-medium text-muted-foreground">Price/Unit</p>
-                                  <p className="font-semibold">${item.pricePerUnit.toFixed(2)}</p>
+                                  <p className="font-semibold">₹{item.pricePerUnit.toFixed(2)}</p>
                                 </div>
                                 <div>
                                   <p className="font-medium text-muted-foreground">Subtotal</p>
-                                  <p className="font-bold">${item.subtotal.toFixed(2)}</p>
+                                  <p className="font-bold">₹{item.subtotal.toFixed(2)}</p>
                                 </div>
                               </div>
                             ))}

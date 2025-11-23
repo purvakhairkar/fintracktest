@@ -179,8 +179,8 @@ export default function HomePage() {
                             <Badge variant="secondary">{item.billCategory}</Badge>
                           </TableCell>
                           <TableCell className="text-right">{item.pieces}</TableCell>
-                          <TableCell className="text-right">${item.pricePerUnit.toFixed(2)}</TableCell>
-                          <TableCell className="text-right font-semibold">${item.subtotal.toFixed(2)}</TableCell>
+                          <TableCell className="text-right">₹{item.pricePerUnit.toFixed(2)}</TableCell>
+                          <TableCell className="text-right font-semibold">₹{item.subtotal.toFixed(2)}</TableCell>
                           <TableCell className="text-muted-foreground">
                             {new Date(item.billDate).toLocaleDateString()}
                           </TableCell>
@@ -210,11 +210,11 @@ export default function HomePage() {
                           </div>
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">Price/Unit:</span>
-                            <span className="font-semibold">${item.pricePerUnit.toFixed(2)}</span>
+                            <span className="font-semibold">₹{item.pricePerUnit.toFixed(2)}</span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">Subtotal:</span>
-                            <span className="font-bold">${item.subtotal.toFixed(2)}</span>
+                            <span className="font-bold">₹{item.subtotal.toFixed(2)}</span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">Date:</span>
