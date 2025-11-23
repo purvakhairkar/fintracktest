@@ -33,7 +33,7 @@ export default function AddBillPage() {
   const [formData, setFormData] = useState({
     category: 'food',
     description: '',
-    gstPercentage: '18',
+    gstAmount: '0',
   });
   const [items, setItems] = useState([
     { itemName: '', pieces: '', pricePerUnit: '' }
@@ -62,8 +62,9 @@ export default function AddBillPage() {
   };
 
   const subtotal = calculateSubtotal();
-  const gstAmount = (subtotal * (parseFloat(formData.gstPercentage) || 0)) / 100;
+  const gstAmount = parseFloat(formData.gstAmount) || 0;
   const totalAmount = subtotal + gstAmount;
+  const gstPercentage = subtotal > 0 ? ((gstAmount / subtotal) * 100).toFixed(2) : 0;
 
   const addItem = () => {
     setItems([...items, { itemName: '', pieces: '', pricePerUnit: '' }]);
@@ -113,7 +114,8 @@ export default function AddBillPage() {
       const formDataToSend = new FormData();
       formDataToSend.append('category', formData.category);
       formDataToSend.append('description', formData.description);
-      formDataToSend.append('gstPercentage', formData.gstPercentage);
+      formDataToSend.append('gstPercentage', gstPercentage);
+      formDataToSend.append('gstAmount', formData.gstAmount);
       formDataToSend.append('items', JSON.stringify(items));
       formDataToSend.append('file', file);
 
@@ -303,18 +305,22 @@ export default function AddBillPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="gstPercentage">GST Percentage (%)</Label>
+                <Label htmlFor="gstAmount">GST Amount (₹)</Label>
                 <Input
-                  id="gstPercentage"
+                  id="gstAmount"
                   type="number"
                   min="0"
-                  max="100"
                   step="0.01"
-                  value={formData.gstPercentage}
-                  onChange={(e) => setFormData({ ...formData, gstPercentage: e.target.value })}
-                  placeholder="e.g., 18, 12, 5"
+                  value={formData.gstAmount}
+                  onChange={(e) => setFormData({ ...formData, gstAmount: e.target.value })}
+                  placeholder="Enter GST amount"
                   required
                 />
+                {subtotal > 0 && gstAmount > 0 && (
+                  <p className="text-sm text-slate-600">
+                    GST Percentage: {gstPercentage}%
+                  </p>
+                )}
               </div>
 
               <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200">
@@ -329,7 +335,7 @@ export default function AddBillPage() {
                       <span className="text-lg font-semibold text-slate-900">₹{subtotal.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2">
-                      <span className="text-slate-700">GST ({formData.gstPercentage}%):</span>
+                      <span className="text-slate-700">GST {gstPercentage > 0 ? `(${gstPercentage}%)` : ''}:</span>
                       <span className="text-lg font-semibold text-slate-900">₹{gstAmount.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between items-center pt-3 border-t-2 border-purple-300">
