@@ -66,7 +66,7 @@ export default function AnalyticsPage() {
                     <h3 className="text-lg font-semibold opacity-90">Total Expenses</h3>
                     <DollarSign className="w-8 h-8 opacity-80" />
                   </div>
-                  <p className="text-4xl font-bold">${data?.totalExpense?.toFixed(2) || '0.00'}</p>
+                  <p className="text-4xl font-bold">₹{data?.totalExpense?.toFixed(2) || '0.00'}</p>
                 </CardContent>
               </Card>
 
@@ -87,7 +87,7 @@ export default function AnalyticsPage() {
                     <TrendingUp className="w-8 h-8 opacity-80" />
                   </div>
                   <p className="text-xl font-bold truncate">{data?.biggestCategory?.name || 'N/A'}</p>
-                  <p className="text-2xl font-bold">${data?.biggestCategory?.value?.toFixed(2) || '0.00'}</p>
+                  <p className="text-2xl font-bold">₹{data?.biggestCategory?.value?.toFixed(2) || '0.00'}</p>
                 </CardContent>
               </Card>
             </div>
@@ -122,7 +122,7 @@ export default function AnalyticsPage() {
                               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                             ))}
                           </Pie>
-                          <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+                          <Tooltip formatter={(value) => `₹${value.toFixed(2)}`} />
                         </PieChart>
                       </ResponsiveContainer>
                       <div className="mt-4 grid grid-cols-2 gap-2">
@@ -159,7 +159,7 @@ export default function AnalyticsPage() {
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="month" />
                         <YAxis />
-                        <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+                        <Tooltip formatter={(value) => `₹${value.toFixed(2)}`} />
                         <Legend />
                         <Bar dataKey="amount" fill="#3b82f6" name="Expenses" />
                       </BarChart>
@@ -207,7 +207,7 @@ export default function AnalyticsPage() {
                               <Badge variant="secondary">{bill.category}</Badge>
                             </TableCell>
                             <TableCell className="text-right font-semibold">
-                              ${bill.totalAmount.toFixed(2)}
+                              ₹{bill.totalAmount.toFixed(2)}
                             </TableCell>
                             <TableCell className="text-muted-foreground">
                               {new Date(bill.timestamp).toLocaleDateString()}

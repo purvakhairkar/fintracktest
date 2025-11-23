@@ -293,7 +293,7 @@ export default function AddBillPage() {
 
                         <div className="mt-3 text-sm text-slate-600">
                           Subtotal: <span className="font-semibold text-slate-900">
-                            ${((parseFloat(item.pieces) || 0) * (parseFloat(item.pricePerUnit) || 0)).toFixed(2)}
+                            ₹{((parseFloat(item.pieces) || 0) * (parseFloat(item.pricePerUnit) || 0)).toFixed(2)}
                           </span>
                         </div>
                       </CardContent>
@@ -304,18 +304,17 @@ export default function AddBillPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="gstPercentage">GST Percentage (%)</Label>
-                <Select value={formData.gstPercentage} onValueChange={(value) => setFormData({ ...formData, gstPercentage: value })}>
-                  <SelectTrigger id="gstPercentage">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="0">0% (No GST)</SelectItem>
-                    <SelectItem value="5">5%</SelectItem>
-                    <SelectItem value="12">12%</SelectItem>
-                    <SelectItem value="18">18%</SelectItem>
-                    <SelectItem value="28">28%</SelectItem>
-                  </SelectContent>
-                </Select>
+                <Input
+                  id="gstPercentage"
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="0.01"
+                  value={formData.gstPercentage}
+                  onChange={(e) => setFormData({ ...formData, gstPercentage: e.target.value })}
+                  placeholder="e.g., 18, 12, 5"
+                  required
+                />
               </div>
 
               <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200">
@@ -327,15 +326,15 @@ export default function AddBillPage() {
                   <div className="space-y-3">
                     <div className="flex justify-between items-center pb-2">
                       <span className="text-slate-700">Subtotal:</span>
-                      <span className="text-lg font-semibold text-slate-900">${subtotal.toFixed(2)}</span>
+                      <span className="text-lg font-semibold text-slate-900">₹{subtotal.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between items-center pb-2">
                       <span className="text-slate-700">GST ({formData.gstPercentage}%):</span>
-                      <span className="text-lg font-semibold text-slate-900">${gstAmount.toFixed(2)}</span>
+                      <span className="text-lg font-semibold text-slate-900">₹{gstAmount.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between items-center pt-3 border-t-2 border-purple-300">
                       <span className="text-xl font-bold text-slate-800">Total Amount:</span>
-                      <span className="text-3xl font-bold text-purple-600">${totalAmount.toFixed(2)}</span>
+                      <span className="text-3xl font-bold text-purple-600">₹{totalAmount.toFixed(2)}</span>
                     </div>
                   </div>
                 </CardContent>
