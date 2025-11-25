@@ -37,10 +37,10 @@ export default function LoginPage() {
           title: "Success",
           description: "Login successful!",
         });
-        setTimeout(() => {
-          router.push('/');
-          router.refresh();
-        }, 1000);
+	setTimeout(() => {
+       	 router.push('/');
+	 router.refresh();
+	}, 1000);
       } else {
         setError(data.error || 'Login failed');
       }
