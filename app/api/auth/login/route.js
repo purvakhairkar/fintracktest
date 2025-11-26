@@ -1,3 +1,4 @@
+
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
@@ -38,7 +39,7 @@ export async function POST(request) {
     }
 
     // Generate token
-    const token = generateToken(user);
+    const token = await generateToken(user);
 
     // Create response
     const response = NextResponse.json(
@@ -56,11 +57,12 @@ export async function POST(request) {
     // Set cookie
     response.cookies.set('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: false,
+      sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: '/',
     });
+
 
     return response;
   } catch (error) {

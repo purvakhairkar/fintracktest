@@ -36,7 +36,9 @@ export default function HomePage() {
   const [endDate, setEndDate] = useState('');
 
   useEffect(() => {
-    fetch('/api/auth/me')
+    fetch('/api/auth/me', {
+       credentials: 'include',
+    })
       .then((res) => res.json())
       .then((data) => setUser(data.user))
       .catch(console.error);

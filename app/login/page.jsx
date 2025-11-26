@@ -37,7 +37,7 @@ export default function LoginPage() {
           title: "Success",
           description: "Login successful!",
         });
-	window.location.href = '/';
+       router.push('/');
       } else {
         setError(data.error || 'Login failed');
       }

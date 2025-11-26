@@ -1,22 +1,29 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { verifyToken } from '@/lib/auth';
 
 export async function GET(request) {
   try {
-    const userId = request.headers.get('x-user-id');
-    const userRole = request.headers.get('x-user-role');
-    const username = request.headers.get('x-user-username');
+    const token = request.cookies.get('token')?.value;
 
-    if (!userId) {
+    if (!token) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
       );
     }
 
-    // Fetch user from database
+    const decoded = verifyToken(token);
+
+    if (!decoded || !decoded.id) {
+      return NextResponse.json(
+        { error: 'Invalid token' },
+        { status: 401 }
+      );
+    }
+
     const user = await prisma.user.findUnique({
-      where: { id: parseInt(userId) },
+      where: { id: decoded.id },
       select: {
         id: true,
         username: true,
@@ -32,10 +39,8 @@ export async function GET(request) {
       );
     }
 
-    return NextResponse.json(
-      { user },
-      { status: 200 }
-    );
+    return NextResponse.json({ user }, { status: 200 });
+
   } catch (error) {
     console.error('Get user error:', error);
     return NextResponse.json(
@@ -44,3 +49,4 @@ export async function GET(request) {
     );
   }
 }
+

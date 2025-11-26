@@ -48,7 +48,9 @@ export default function BillsPage() {
   const [expandedBill, setExpandedBill] = useState(null);
 
   useEffect(() => {
-    fetch('/api/auth/me')
+    fetch('/api/auth/me', {
+      credentials: 'include',
+    })
       .then((res) => res.json())
       .then((data) => setUser(data.user))
       .catch(console.error);

@@ -1,9 +1,12 @@
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
+import './lib/env'; // Validate environment variables
 
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET || 'your-super-strong-secret-key-change-this-in-production'
-);
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET is missing! Set it in .env");
+}
+
+const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export async function middleware(request) {
   const { pathname } = request.nextUrl;
@@ -15,7 +18,7 @@ export async function middleware(request) {
 
   // Get token from cookies
   const token = request.cookies.get('token');
-
+  console.log("Cookies received:", request.cookies.getAll());
   // If no token and trying to access protected route, redirect to login
   if (!token && pathname !== '/login') {
     // For API routes, return 401 instead of redirecting

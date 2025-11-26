@@ -42,7 +42,9 @@ export default function AddBillPage() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch('/api/auth/me')
+    fetch('/api/auth/me', {
+      credentials: 'include',
+    })
       .then((res) => res.json())
       .then((data) => {
         setUser(data.user);
